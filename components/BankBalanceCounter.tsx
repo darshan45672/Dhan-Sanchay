@@ -8,7 +8,7 @@ const BankBalanceCounter = ({count} : {count : number}) => {
     <CountUp end={count}
     prefix='₹'
     decimal='.'
-    duration={2}
+    duration={1}
     decimals={2} />
     </p>
   )
