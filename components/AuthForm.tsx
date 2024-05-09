@@ -43,15 +43,15 @@ const AuthForm = ({ type }: { type: string }) => {
     try {
 
       if (type==="sign-up") {
-        // const newUser = await signUp(values);
-        // setUser(newUser);
+        const newUser = await signUp(values);
+        setUser(newUser);
       }
 
       if (type==="sign-in") {
-        // const response = await SignIn({email: values.email, password: values.password});
-        // if(response){
-        //   route.push('/');
-        // }
+        const response = await signIn({email: values.email, password: values.password});
+        if(response){
+          route.push('/');
+        }
       }
       
     } catch (error) {
