@@ -43,7 +43,7 @@ const MobileNavBar = ({ user }: MobileNavBarProps) => {
               //   className="size-[24px] max-xl:size-14"
             />
             <h1 className="text-26 font-ibm-plex-serif font-bold text-tblack-1">
-              Horizon
+              Maala Maal
             </h1>
           </Link>
           <div className="mobilenav-sheet">
