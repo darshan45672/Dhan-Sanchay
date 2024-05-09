@@ -19,13 +19,17 @@ import { Input } from "@/components/ui/input";
 import InputForm from "./InputForm";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { sign } from "crypto";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: string }) => {
+  const route = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setisLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof authFormSchema>>({
-    resolver: zodResolver(authFormSchema),
+  const formSchema = authFormSchema(type);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -33,12 +37,30 @@ const AuthForm = ({ type }: { type: string }) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
     setisLoading(true);
+    try {
+
+      if (type==="sign-up") {
+        // const newUser = await signUp(values);
+        // setUser(newUser);
+      }
+
+      if (type==="sign-in") {
+        // const response = await SignIn({email: values.email, password: values.password});
+        // if(response){
+        //   route.push('/');
+        // }
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
+    }finally{
+      setisLoading(false);
+    }
     console.log(values);
-    setisLoading(false);
   }
 
   return (
@@ -71,6 +93,73 @@ const AuthForm = ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {type === "sign-up" && (
+                <>
+                  <div className="flex gap-4">
+                    <InputForm
+                      name="firstName"
+                      label="First Name"
+                      control={form.control}
+                      type="text"
+                      placeholder="Darshan"
+                    />
+                    <InputForm
+                      name="lastName"
+                      label="Last Name"
+                      control={form.control}
+                      type="text"
+                      placeholder="Bhandary"
+                    />
+                  </div>
+                  <InputForm
+                    name="address"
+                    label="Address"
+                    control={form.control}
+                    type="text"
+                    placeholder="Enter your specific address"
+                  />
+                  <InputForm
+                    name="city"
+                    label="City"
+                    control={form.control}
+                    type="text"
+                    placeholder="Mangalore"
+                  />
+                  <div className="flex gap-4">
+                    <InputForm
+                      name="state"
+                      label="State"
+                      control={form.control}
+                      type="text"
+                      placeholder="Karnataka"
+                    />
+                    <InputForm
+                      name="postalCode"
+                      label="Postal Code"
+                      control={form.control}
+                      type="text"
+                      placeholder="575019"
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <InputForm
+                      name="dob"
+                      label="Date of Birth"
+                      control={form.control}
+                      type="text"
+                      placeholder="yyyy-mm-dd"
+                    />
+                    <InputForm
+                      name="ssn"
+                      label="SSN"
+                      control={form.control}
+                      type="text"
+                      placeholder="1234"
+                    />
+                  </div>
+                </>
+              )}
+
               <InputForm
                 name="email"
                 label="Email"
