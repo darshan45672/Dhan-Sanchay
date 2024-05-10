@@ -49,10 +49,10 @@ const AuthForm = ({ type }: { type: string }) => {
       }
 
       if (type==="sign-in") {
-        // const response = await signIn({email: values.email, password: values.password});
-        // if(response){
-        //   route.push('/');
-        // }
+        const response = await signIn({email: values.email, password: values.password});
+        if(response){
+          route.push('/');
+        }
       }
       
     } catch (error) {
