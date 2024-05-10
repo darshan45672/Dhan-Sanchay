@@ -22,6 +22,7 @@ import { Loader2 } from "lucide-react";
 import { sign } from "crypto";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const route = useRouter();
@@ -44,7 +45,19 @@ const AuthForm = ({ type }: { type: string }) => {
     try {
 
       if (type==="sign-up") {
-        const newUser = await signUp(values);
+        const userData = {
+          firstName: values.firstName!, 
+          lastName: values.lastName!,
+          address: values.address!,
+          city: values.city!,
+          state: values.state!,
+          postalCode: values.postalCode!,
+          dateOfBirth: values.dateOfBirth!,
+          ssn: values.ssn!,
+          email: values.email,
+          password: values.password,
+        }
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
 
@@ -88,9 +101,11 @@ const AuthForm = ({ type }: { type: string }) => {
           </p>
         </div>
       </header>
-      {user ? (
-        <div className="flex flex-col gap-4">{/* Plaid Link */}</div>
-      ) : (
+      {/* {user ? ( */}
+        <div className="flex flex-col gap-4">{/* Plaid Link */}
+          <PlaidLink user={user} variant="primary"  />
+        </div>
+      {/* ) : ( */}
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -144,7 +159,7 @@ const AuthForm = ({ type }: { type: string }) => {
                   </div>
                   <div className="flex gap-4">
                     <InputForm
-                      name="dob"
+                      name="dateOfBirth"
                       label="Date of Birth"
                       control={form.control}
                       type="text"
@@ -208,7 +223,7 @@ const AuthForm = ({ type }: { type: string }) => {
             </Link>
           </footer>
         </>
-      )}
+      {/* )} */}
     </section>
   );
 };
