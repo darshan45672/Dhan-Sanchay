@@ -1,7 +1,7 @@
 "use server";
 
 import { ID } from "node-appwrite";
-import { createAdminClient } from "../appwrite";
+import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
 
@@ -37,3 +37,15 @@ export const signUp = async (userData: SignUpParams) => {
     console.error("Error", error);
   }
 };
+
+
+export async function getLoggedInUser() {
+    try {
+      const { account } = await createSessionClient();
+      const user = await account.get();
+      return parseStringify(user);
+    } catch (error) {
+      return null;
+    }
+  }
+  
