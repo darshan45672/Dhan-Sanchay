@@ -48,7 +48,7 @@ const AuthForm = ({ type }: { type: string }) => {
         const userData = {
           firstName: values.firstName!, 
           lastName: values.lastName!,
-          address: values.address!,
+          address1: values.address!,
           city: values.city!,
           state: values.state!,
           postalCode: values.postalCode!,
@@ -101,11 +101,11 @@ const AuthForm = ({ type }: { type: string }) => {
           </p>
         </div>
       </header>
-      {/* {user ? ( */}
+      {user ? (
         <div className="flex flex-col gap-4">{/* Plaid Link */}
           <PlaidLink user={user} variant="primary"  />
         </div>
-      {/* ) : ( */}
+      ) : ( 
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -154,7 +154,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       label="Postal Code"
                       control={form.control}
                       type="text"
-                      placeholder="575019"
+                      placeholder="57501"
                     />
                   </div>
                   <div className="flex gap-4">
@@ -170,7 +170,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       label="SSN"
                       control={form.control}
                       type="text"
-                      placeholder="1234"
+                      placeholder="123-45-6789"
                     />
                   </div>
                 </>
@@ -223,7 +223,7 @@ const AuthForm = ({ type }: { type: string }) => {
             </Link>
           </footer>
         </>
-      {/* )} */}
+      )} 
     </section>
   );
 };

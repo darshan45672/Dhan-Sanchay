@@ -15,6 +15,21 @@ import { link } from "fs";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 
+// Define a list of valid state abbreviations
+const validStateAbbreviations: string[] = [
+  "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+  "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+  "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+  "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+  "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+];
+
+// Validation function to check if a state abbreviation is valid
+const isValidStateAbbreviation = (state: string): boolean => {
+  return validStateAbbreviations.includes(state.toUpperCase());
+};
+
+
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
@@ -32,11 +47,17 @@ export const signIn = async ({ email, password }: signInProps) => {
   }
 };
 
-export const signUp = async (userData: SignUpParams) => {
-  const { email, password, firstName, lastName } = userData;
+export const signUp = async ({password, ...userData }: SignUpParams) => {
+  const { email, firstName, lastName, state } = userData;
+  console.log(userData.state);
+  console.log(userData.dateOfBirth);
 
   let newUserAccount;
-  try {
+  try { 
+    if (!isValidStateAbbreviation(userData.state)) {
+      throw new Error('State must be a valid 2-letter abbreviation.');
+    }
+
     const { account, database } = await createAdminClient();
 
     newUserAccount = await account.create(
@@ -109,7 +130,8 @@ export const createLinkToken = async (user: User) => {
       user: {
         client_user_id: user.$id,
       },
-      client_name: user.name,
+      // client_name: user.name,
+      client_name: `${user.firstName} ${user.lastName}`,
       products: ["auth"] as Products[],
       language: "en",
       country_codes: ["US"] as CountryCode[],
