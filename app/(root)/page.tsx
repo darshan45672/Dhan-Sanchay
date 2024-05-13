@@ -1,4 +1,5 @@
 import HeaderBox from "@/components/HeaderBox";
+import RecentTransactions from "@/components/RecentTransactions";
 import RightSideBar from "@/components/RightSideBar";
 import TotalBalance from "@/components/TotalBalance";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
@@ -6,6 +7,8 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import React from "react";
 
 const Home = async ( {searchParams : {id, page}}:SearchParamProps) => {
+  const current =  Number(page as string) || 1 ;
+
   const loggedIn = await getLoggedInUser();
   console.log(loggedIn);
 
@@ -35,7 +38,8 @@ const Home = async ( {searchParams : {id, page}}:SearchParamProps) => {
             totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
-        RECENT TRANSCATION
+        {/* RECENT TRANSCATION */}
+        <RecentTransactions accounts={accounts?.data} transactions={account?.transactions} appwriteItemId = {appwriteItemId} page={current} />
       </div>
       <RightSideBar user={loggedIn} transactions={accounts?.transactions} banks={accounts?.data.slice(0,2)} />
     </section>
