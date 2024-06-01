@@ -5,6 +5,7 @@ import { BankTabItem } from "./BankTabItem";
 import BankInfo from "./BankInfo";
 import TransactionsTable from "./TransactionsTable";
 
+console.log("RecentTransactions called");
 const RecentTransactions = ({
   accounts,
   transactions = [],
