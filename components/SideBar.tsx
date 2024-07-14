@@ -15,7 +15,7 @@ const SideBar = ({user}: SiderbarProps) => {
         <nav className='flex flex-col gap-4'>
             <Link className="mb-12 mt-5 flex cursor-pointer items-center gap-2" href="/">
                 <Image src='/icons/logo.svg' width={34} height={34} alt='Logo' className='size-[24px] max-xl:size-14'/>
-            <h1 className='sidebar-logo'>Maala Maal</h1>
+            <h1 className='sidebar-logo'>Dhan Sanchay</h1>
             </Link>
 
             {sidebarLinks.map((link) => {
